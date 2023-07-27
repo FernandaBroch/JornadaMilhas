@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alura.jornadaMilhas.repositories.TestimonyRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +27,14 @@ public class TestimonyService {
         return testimonyRepository.findAll()
                 .stream()
                 .collect(Collectors.toList());
+    }
+
+    public List<Testimony> selectRandomTestimony(Integer quantity){
+        List testimonies = findAll();
+        if ( testimonies.size() < quantity )
+            quantity = testimonies.size();
+        Collections.shuffle(testimonies);
+        return testimonies.subList(0,quantity);
     }
 
     public Testimony update(Testimony testimony){
